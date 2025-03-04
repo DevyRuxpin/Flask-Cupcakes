@@ -1,14 +1,19 @@
 """Flask app for Cupcakes"""
+import os
 from flask import Flask, request, jsonify
 from models import db, connect_db, Cupcake, DEFAULT_IMAGE
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes_test'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL', 'postgresql:///cupcakes_test')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = "secret"
 
 connect_db(app)
+
+if __name__ == "__main__":
+    db.create_all()
 
 @app.route("/api/cupcakes")
 def list_cupcakes():
@@ -55,3 +60,4 @@ def remove_cupcake(cupcake_id):
     db.session.delete(cupcake)
     db.session.commit()
     return jsonify(message="Deleted")
+
