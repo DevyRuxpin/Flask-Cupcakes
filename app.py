@@ -1,12 +1,13 @@
 """Flask app for Cupcakes"""
 import os
 from flask import Flask, request, jsonify
-from models import db, connect_db, Cupcake, DEFAULT_IMAGE
+from models import db, connect_db, Cupcake
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    'DATABASE_URL', 'postgresql:///cupcakes_test')
+    'SQLALCHEMY_DATABASE_URI', 'postgresql:///cupcakes_test'
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = "secret"
 
