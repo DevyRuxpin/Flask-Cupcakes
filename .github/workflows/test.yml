@@ -28,10 +28,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip uninstall -y flask werkzeug
           pip install -r requirements.txt
 
       - name: Run tests
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/cupcakes_test
+          SQLALCHEMY_DATABASE_URI: postgresql://postgres:postgres@localhost:5432/cupcakes_test
         run: |
           python -m unittest -v tests.py
+
